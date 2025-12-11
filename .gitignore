@@ -6,6 +6,7 @@
 /.pnp
 .pnp.*
 .yarn/*
+.gitRelatedData
 !.yarn/patches
 !.yarn/plugins
 !.yarn/releases
