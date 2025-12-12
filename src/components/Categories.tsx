@@ -9,6 +9,7 @@ import {
   Hand,
   Venus,
 } from "lucide-react";
+import { usePathname, useRouter, useSearchParams } from "next/navigation";
 
 const categories = [
   {
@@ -54,12 +55,26 @@ const categories = [
 ];
 
 const Categories = () => {
+  const seachParams = useSearchParams();
+  const selectedCategory = seachParams.get("category");
+  const router = useRouter();
+  const pathname = usePathname();
+
+  const handleChange = (value: string | null) => {
+    const params = new URLSearchParams(seachParams);
+    params.set("category", value || "all");
+    //router.push(`${pathname}?category=${value}`); //ye sirf url ke category variable pr kaam karega agar aap &test=123 aisa variable pass karte hai to vo nhi dikhega ya hat jayega jab dusari category select karenge .
+    router.push(`${pathname}?${params.toString()}`, { scroll: false }); // tha url me kitna bhi variable pass karo sab accept hongi
+  };
   return (
     <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-6 xl:grid-cols-8 gap-2 bg-gray-100 p-2 rounded-lg mb-4 text-sm">
       {categories.map((category) => (
         <div
-          className="flex items-center justify-center gap-2 cursor-pointer px-2 py-1 rounded-md"
-          key={category.name}>
+          className={`flex items-center justify-center gap-2 cursor-pointer px-2 py-1 rounded-md ${
+            category.slug === selectedCategory ? "bg-white" : "text-gray-500"
+          }`}
+          key={category.name}
+          onClick={() => handleChange(category.slug)}>
           {category.icon}
           {category.name}
         </div>

@@ -1,7 +1,7 @@
 import { ProductType } from "@/types";
 
 const ProductCard = ({ product }: { product: ProductType }) => {
-  return <div>ProductCard</div>;
+  return <div> </div>;
 };
 
 export default ProductCard;
