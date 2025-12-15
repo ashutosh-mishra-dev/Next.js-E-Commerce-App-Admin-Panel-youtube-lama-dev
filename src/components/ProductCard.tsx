@@ -21,6 +21,8 @@ const ProductCard = ({ product }: { product: ProductType }) => {
   }) => {
     setProductTypes((prev) => ({ ...prev, [type]: value }));
   };
+
+  console.log("product : ", product);
   return (
     <div className="overflow-hidden rounded-lg shadow-lg">
       {/* IMAGE */}
