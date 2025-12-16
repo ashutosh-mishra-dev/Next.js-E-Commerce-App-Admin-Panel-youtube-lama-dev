@@ -28,7 +28,7 @@ export type CartItemType = ProductType & {
 //array version
 export type CartItemsType = CartItemType[];
 
-// yha ham zod ka schema bna rhe h
+// ShippingForm ke liye schema : yha ham zod ka schema bna rhe h
 export const shippingFormSchema = z.object({
   name: z.string().min(1, "Name is Required!"),
   email: z.string().min(1, "email is Required!"),
@@ -42,3 +42,21 @@ export const shippingFormSchema = z.object({
 });
 
 export type ShippingFormInputs = z.infer<typeof shippingFormSchema>;
+
+// paymentFormSchema ke liye schema :
+export const paymentFormSchema = z.object({
+  cardHolder: z.string().min(1, "card holder is Required!"),
+  cardNumber: z
+    .string()
+    .min(16, "card number is Required!")
+    .max(16, "card number is Required!"),
+  expirationDate: z
+    .string()
+    .regex(
+      /^(0[1-9]|1[0-2])\/\d{2}$/,
+      "expirationDate must be in MM/YY format!",
+    ),
+  cvv: z.string().min(3, "CVV is Required!").max(3, "CVV is Required!"),
+});
+
+export type PaymentFormInputs = z.infer<typeof paymentFormSchema>;
