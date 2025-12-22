@@ -60,3 +60,14 @@ export const paymentFormSchema = z.object({
 });
 
 export type PaymentFormInputs = z.infer<typeof paymentFormSchema>;
+
+// yha ham typescript ki variable/function pr type define kiya ja rha : jiska use ham 1.src/store/cartStore.ts me kar rhe hai
+export type CartStoreStateType = {
+  cart: CartItemsType;
+};
+
+export type CartStoreActionsType = {
+  addTocart: (product: CartItemType) => void;
+  removeFromCart: (product: CartItemType) => void;
+  clearCart: () => void;
+};

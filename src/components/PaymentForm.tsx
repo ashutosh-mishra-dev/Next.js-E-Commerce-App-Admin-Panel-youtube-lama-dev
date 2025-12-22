@@ -14,7 +14,7 @@ const PaymentForm = () => {
   });
 
   const handlePaymentForm: SubmitHandler<PaymentFormInputs> = (data) => {
-    console.log(data);
+    //console.log(data);
   };
   return (
     <form

@@ -1,5 +1,6 @@
 "use client";
 
+import useCartStore from "@/store/cartStore";
 import { ProductType } from "@/types";
 import { ShoppingCart } from "lucide-react";
 import Image from "next/image";
@@ -12,6 +13,8 @@ const ProductCard = ({ product }: { product: ProductType }) => {
     color: product.colors[0],
   });
 
+  const { addTocart } = useCartStore();
+
   const handleProductType = ({
     type,
     value,
@@ -21,8 +24,16 @@ const ProductCard = ({ product }: { product: ProductType }) => {
   }) => {
     setProductTypes((prev) => ({ ...prev, [type]: value }));
   };
+  //  console.log("product : ", product);
 
-  console.log("product : ", product);
+  const handleAddToCart = () => {
+    addTocart({
+      ...product,
+      quantity: 1,
+      selectedSize: productTypes.size,
+      selectedColor: productTypes.color,
+    });
+  };
   return (
     <div className="overflow-hidden rounded-lg shadow-lg">
       {/* IMAGE */}
@@ -85,7 +96,10 @@ const ProductCard = ({ product }: { product: ProductType }) => {
         <div className="flex items-center justify-between">
           {/* yha hamne toFixed 3.9 to 3.90 last me do digit dikhayega */}
           <p className="font-medium">{product.price.toFixed(2)}</p>
-          <button className="flex cursor-pointer items-center gap-2 rounded-md px-2 py-1 text-sm shadow-lg ring-1 ring-gray-200 transition-all duration-300 hover:bg-black hover:text-white">
+          <button
+            onClick={handleAddToCart}
+            className="flex cursor-pointer items-center gap-2 rounded-md px-2 py-1 text-sm shadow-lg ring-1 ring-gray-200 transition-all duration-300 hover:bg-black hover:text-white"
+          >
             <ShoppingCart className="h-4 w-4" />
             Add to Card
           </button>
