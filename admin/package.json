@@ -1,5 +1,4 @@
 {
-<<<<<<< HEAD
   "name": "shadcn",
   "version": "0.1.0",
   "private": true,
@@ -28,13 +27,13 @@
     "@tanstack/react-table": "^8.21.3",
     "class-variance-authority": "^0.7.1",
     "clsx": "^2.1.1",
-    "date-fns": "^3.6.0",
+    "date-fns": "^4.1.0",
     "lucide-react": "^0.488.0",
-    "next": "15.3.0",
+    "next": "16.0.8",
     "next-themes": "^0.4.6",
-    "react": "^19.0.0",
+    "react": "19.2.3",
     "react-day-picker": "^9.13.0",
-    "react-dom": "^19.0.0",
+    "react-dom": "19.2.3",
     "react-hook-form": "^7.55.0",
     "recharts": "^2.15.2",
     "tailwind-merge": "^3.2.0",
@@ -43,40 +42,12 @@
   },
   "devDependencies": {
     "@eslint/eslintrc": "^3",
-=======
-  "name": "client",
-  "version": "0.1.0",
-  "private": true,
-  "scripts": {
-    "dev": "next dev",
-    "build": "next build",
-    "start": "next start",
-    "lint": "eslint"
-  },
-  "dependencies": {
-    "@hookform/resolvers": "^5.2.2",
-    "lucide-react": "^0.559.0",
-    "next": "16.0.8",
-    "react": "19.2.1",
-    "react-dom": "19.2.1",
-    "react-hook-form": "^7.68.0",
-    "react-toastify": "^11.0.5",
-    "zod": "^4.2.0",
-    "zustand": "^5.0.9"
-  },
-  "devDependencies": {
->>>>>>> ced7264168a6e13bd36b000a9211a81bdcbb31d4
     "@tailwindcss/postcss": "^4",
     "@types/node": "^20",
     "@types/react": "^19",
     "@types/react-dom": "^19",
     "eslint": "^9",
-<<<<<<< HEAD
     "eslint-config-next": "15.3.0",
-=======
-    "eslint-config-next": "16.0.8",
-    "prettier-plugin-tailwindcss": "^0.7.2",
->>>>>>> ced7264168a6e13bd36b000a9211a81bdcbb31d4
     "tailwindcss": "^4",
     "typescript": "^5"
   }
