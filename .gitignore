@@ -2,5 +2,5 @@ client/node_modules
 admin/node_modules
 client/.next
 admin/.next
-client/.gitRelatedData
+.gitRelatedData
 client/.gitignore
