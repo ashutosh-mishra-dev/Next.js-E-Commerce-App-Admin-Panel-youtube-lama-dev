@@ -19,35 +19,30 @@ import {
   FormMessage,
 } from "./ui/form";
 import { Input } from "./ui/input";
-import {
-  Select,
-  SelectContent,
-  SelectItem,
-  SelectTrigger,
-  SelectValue,
-} from "@/components/ui/select";
+
 import { Button } from "./ui/button";
 
 const formSchema = z.object({
-  username: z
+  fullName: z
     .string()
-    .min(2, { message: "Username must be at least 2 characters!" })
+    .min(2, { message: "Full name must be at least 2 characters!" })
     .max(50),
   email: z.string().email({ message: "Invalid email address!" }),
   phone: z.string().min(10).max(15),
-  location: z.string().min(2),
-  role: z.enum(["admin", "user"]),
+  address: z.string().min(2),
+  city: z.string().min(2),
+
 });
 
 const EditUser = () => {
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
     defaultValues: {
-      username: "john.doe",
+      fullName: "John Doe",
       email: "john.doe@gmail.com",
       phone: "+1 234 5678",
-      location: "New York, NY",
-      role: "admin",
+      address: "123 main road, NY",
+      city: "New York",
     },
   });
   return (
@@ -59,15 +54,15 @@ const EditUser = () => {
             <form className="space-y-8">
               <FormField
                 control={form.control}
-                name="username"
+                name="fullName"
                 render={({ field }) => (
                   <FormItem>
-                    <FormLabel>Username</FormLabel>
+                    <FormLabel>Full Name</FormLabel>
                     <FormControl>
                       <Input {...field} />
                     </FormControl>
                     <FormDescription>
-                      This is your public username.
+                     Enter user full name.
                     </FormDescription>
                     <FormMessage />
                   </FormItem>
@@ -99,7 +94,7 @@ const EditUser = () => {
                       <Input {...field} />
                     </FormControl>
                     <FormDescription>
-                      Only admin can see your phone number.
+                      Only admin can see your phone number (optional).
                     </FormDescription>
                     <FormMessage />
                   </FormItem>
@@ -107,15 +102,15 @@ const EditUser = () => {
               />
               <FormField
                 control={form.control}
-                name="location"
+                name="address"
                 render={({ field }) => (
                   <FormItem>
-                    <FormLabel>Location</FormLabel>
+                    <FormLabel>Address</FormLabel>
                     <FormControl>
                       <Input {...field} />
                     </FormControl>
                     <FormDescription>
-                      This is the public location.
+                     Enter user address (optional).
                     </FormDescription>
                     <FormMessage />
                   </FormItem>
@@ -123,23 +118,17 @@ const EditUser = () => {
               />
               <FormField
                 control={form.control}
-                name="role"
+                name="city"
                 render={({ field }) => (
                   <FormItem>
-                    <FormLabel>Role</FormLabel>
-                    <FormControl>
-                      <Select>
-                        <SelectTrigger>
-                          <SelectValue placeholder="Role" />
-                        </SelectTrigger>
-                        <SelectContent>
-                          <SelectItem value="admin">Admin</SelectItem>
-                          <SelectItem value="user">User</SelectItem>
-                        </SelectContent>
-                      </Select>
+                    <FormLabel>City</FormLabel>
+                    
+                     <FormControl>
+                      <Input {...field} />
                     </FormControl>
+                    
                     <FormDescription>
-                      Only verified users can be admin.
+                      Enter user city (optional).
                     </FormDescription>
                     <FormMessage />
                   </FormItem>

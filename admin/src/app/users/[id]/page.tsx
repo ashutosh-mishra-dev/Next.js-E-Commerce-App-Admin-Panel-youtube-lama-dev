@@ -1,5 +1,5 @@
-import CardList from "@/components/CardList";
-import { Badge } from "@/components/ui/badge";
+
+
 import {
   Breadcrumb,
   BreadcrumbItem,
@@ -18,7 +18,6 @@ import { BadgeCheck, Candy, Citrus, Shield } from "lucide-react";
 import { Sheet, SheetTrigger } from "@/components/ui/sheet";
 import { Button } from "@/components/ui/button";
 import EditUser from "@/components/EditUser";
-import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import AppLineChart from "@/components/AppLineChart";
 
 const SingleUserPage = () => {
@@ -125,8 +124,8 @@ const SingleUserPage = () => {
                 <Progress value={66} />
               </div>
               <div className="flex items-center gap-2">
-                <span className="font-bold">Username:</span>
-                <span>john.doe</span>
+                <span className="font-bold">Full name:</span>
+                <span>John Doe</span>
               </div>
               <div className="flex items-center gap-2">
                 <span className="font-bold">Email:</span>
@@ -137,27 +136,28 @@ const SingleUserPage = () => {
                 <span>+1 234 5678</span>
               </div>
               <div className="flex items-center gap-2">
-                <span className="font-bold">Location:</span>
-                <span>New York, NY</span>
+                <span className="font-bold">Address:</span>
+                <span>123 main road </span>
               </div>
-              <div className="flex items-center gap-2">
-                <span className="font-bold">Role:</span>
-                <Badge>Admin</Badge>
+               <div className="flex items-center gap-2">
+                <span className="font-bold">City :</span>
+                <span>New York </span>
               </div>
+            
             </div>
             <p className="text-sm text-muted-foreground mt-4">
               Joined on 2025.01.01
             </p>
           </div>
           {/* CARD LIST CONTAINER */}
-          <div className="bg-primary-foreground p-4 rounded-lg">
+          {/* <div className="bg-primary-foreground p-4 rounded-lg">
             <CardList title="Recent Transactions" />
-          </div>
+          </div> */}
         </div>
         {/* RIGHT */}
         <div className="w-full xl:w-2/3 space-y-6">
           {/* USER CARD CONTAINER */}
-          <div className="bg-primary-foreground p-4 rounded-lg space-y-2">
+          {/* <div className="bg-primary-foreground p-4 rounded-lg space-y-2">
             <div className="flex items-center gap-2">
               <Avatar className="size-12">
                 <AvatarImage src="https://avatars.githubusercontent.com/u/1486366" />
@@ -171,7 +171,7 @@ const SingleUserPage = () => {
               cum corrupti sed repudiandae ipsum, harum recusandae ratione ipsam
               in, quis quia.
             </p>
-          </div>
+          </div> */}
           {/* CHART CONTAINER */}
           <div className="bg-primary-foreground p-4 rounded-lg">
             <h1 className="text-xl font-semibold">User Activity</h1>
