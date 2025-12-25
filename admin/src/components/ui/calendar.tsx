@@ -59,14 +59,31 @@ function Calendar({
         day_hidden: "invisible",
         ...classNames,
       }}
+
+      //ye yha wrong code h becouse ye old version ka tha code
+      // components={{
+      //   IconLeft: ({ className, ...props }) => (
+      //     <ChevronLeft className={cn("size-4", className)} {...props} />
+      //   ),
+      //   IconRight: ({ className, ...props }) => (
+      //     <ChevronRight className={cn("size-4", className)} {...props} />
+      //   ),
+      // }}
+
+     // ye write code h new version support karta hai
       components={{
-        IconLeft: ({ className, ...props }) => (
-          <ChevronLeft className={cn("size-4", className)} {...props} />
-        ),
-        IconRight: ({ className, ...props }) => (
-          <ChevronRight className={cn("size-4", className)} {...props} />
-        ),
-      }}
+  PreviousMonthButton: ({ className, ...props }) => (
+    <button {...props}>
+      <ChevronLeft className={cn("size-4", className)} />
+    </button>
+  ),
+  NextMonthButton: ({ className, ...props }) => (
+    <button {...props}>
+      <ChevronRight className={cn("size-4", className)} />
+    </button>
+  ),
+}}
+
       {...props}
     />
   )
