@@ -9,7 +9,19 @@ const Filter = () => {
 
   const handleFilter = (value: string | null) => {
     const params = new URLSearchParams(searchParams);
-    params.set("sort", value);
+    //params.set("sort", value); ye yha galat h eske jagah me ham niche alag-2 method ke hisab se kar sakte hai
+    //method 1:
+    if (value) {
+      params.set("sort", value);
+    } else {
+      params.delete("sort");
+    }
+
+    //method 2:
+    //params.set("sort", value ?? "");
+
+    //method 3:
+    //params.set("sort", value as string);
     router.push(`${pathname}?${params.toString()}`, { scroll: false });
   };
 
