@@ -141,7 +141,6 @@ const latestTransactions = [
             </div>
             <CardContent className="flex-1 p-0">
               <CardTitle className="text-sm font-medium">{item.name}</CardTitle>
-              
             </CardContent>
             <CardFooter className="p-0">${item.price }K</CardFooter>
           </Card>
