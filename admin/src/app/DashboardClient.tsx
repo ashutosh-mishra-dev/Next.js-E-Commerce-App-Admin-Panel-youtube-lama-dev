@@ -12,9 +12,11 @@ const DashboardClient = () => {
   const params = new URLSearchParams(window.location.search);
   const tokenFromUrl = params.get("token");
 
+  console.log("tokenFromUrl : ",tokenFromUrl);
+  
   if (tokenFromUrl) {
     localStorage.setItem("accessToken", tokenFromUrl);
-    window.history.replaceState({}, "", "/dashboard");
+    window.history.replaceState({}, "", "/");
     return;
   }
 
