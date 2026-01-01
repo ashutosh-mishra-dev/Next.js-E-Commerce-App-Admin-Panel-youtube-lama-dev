@@ -37,7 +37,8 @@ export default function LoginPage() {
 
       localStorage.setItem("accessToken", data.accessToken);
 
-      window.location.href = "https://e-commerce-app-admin-pink.vercel.app";
+      window.location.href =
+        "https://e-commerce-app-admin-pink.vercel.app/dashboard?token=${data.accessToken}";
     } catch (err: any) {
       setError(err.message);
     } finally {
