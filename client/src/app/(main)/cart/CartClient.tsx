@@ -30,7 +30,7 @@ const CartClient = () => {
 
     if (!token) {
       window.location.href =
-        "https://e-commerce-client-git-main-ashutosh-mishra-devs-projects.vercel.app/login";
+        "https://e-commerce-client-lake-three.vercel.app/login";
     }
   }, []);
 
