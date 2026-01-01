@@ -7,7 +7,7 @@ import { ShippingFormInputs } from "@/types";
 import { ArrowRight, Trash2 } from "lucide-react";
 import Image from "next/image";
 import { useRouter, useSearchParams } from "next/navigation";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 
 const steps = [
   { id: 1, title: "Shopping Cart" },
@@ -24,6 +24,16 @@ const CartClient = () => {
   const activeStep = parseInt(searchParams.get("step") || "1");
 
   const { cart, removeFromCart } = useCartStore();
+
+  useEffect(() => {
+    const token = localStorage.getItem("accessToken");
+
+    if (!token) {
+      window.location.href =
+        "https://e-commerce-client-443ile52k-ashutosh-mishra-devs-projects.vercel.app/login";
+    }
+  }, []);
+
   return (
     <div className="mt-12 flex flex-col items-center justify-center gap-8">
       {/* TITLE */}

@@ -1,8 +1,7 @@
+// app/layout.tsx
 import type { Metadata } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
-import Navbar from "../components/Navbar";
-import Footer from "../components/Footer";
 import { ToastContainer } from "react-toastify";
 
 const geistSans = Geist({
@@ -17,24 +16,20 @@ const geistMono = Geist_Mono({
 
 export const metadata: Metadata = {
   title: "AkStype-Best Clothes",
-  description: "AkStype is the best place to find the best clothes ",
+  description: "AkStype is the best place to find the best clothes",
 };
 
 export default function RootLayout({
   children,
-}: Readonly<{
+}: {
   children: React.ReactNode;
-}>) {
+}) {
   return (
     <html lang="en">
       <body
         className={`${geistSans.variable} ${geistMono.variable} antialiased`}
       >
-        <div className="mx-auto p-4 sm:max-w-xl sm:px-0 md:max-w-2xl lg:max-w-3xl xl:max-w-6xl">
-          <Navbar />
-          {children}
-          <Footer />
-        </div>
+        {children}
         <ToastContainer position="bottom-right" />
       </body>
     </html>
