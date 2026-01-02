@@ -15,7 +15,18 @@ import { Button } from "./ui/button";
 import { useTheme } from "next-themes";
 import { SidebarTrigger } from "./ui/sidebar";
 
+import { useRouter } from "next/navigation";
+import { useAuthStore } from "../../store/authStore";
+
 const Navbar = () => {
+  const router = useRouter();
+  const logout = useAuthStore((state) => state.logout);
+
+  const handleLogout = () => {
+  logout();                      
+  router.replace("/login");      
+};
+
   const {  setTheme } = useTheme();
   // const { toggleSidebar } = useSidebar();
   return (
@@ -68,7 +79,7 @@ const Navbar = () => {
               <Settings className="h-[1.2rem] w-[1.2rem] mr-2" />
               Settings
             </DropdownMenuItem>
-            <DropdownMenuItem variant="destructive">
+            <DropdownMenuItem variant="destructive" onClick={handleLogout}>
               <LogOut className="h-[1.2rem] w-[1.2rem] mr-2" />
               Logout
             </DropdownMenuItem>
