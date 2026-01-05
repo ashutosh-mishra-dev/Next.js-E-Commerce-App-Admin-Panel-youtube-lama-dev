@@ -21,10 +21,12 @@ import { useAuthStore } from "../../store/authStore";
 const Navbar = () => {
   const router = useRouter();
   const logout = useAuthStore((state) => state.logout);
+  const {user} = useAuthStore();
+  const userImage = user?.image;
 
   const handleLogout = () => {
   logout();                      
-  router.replace("/login");      
+  router.replace("/login");
 };
 
   const {  setTheme } = useTheme();
@@ -64,7 +66,7 @@ const Navbar = () => {
         <DropdownMenu>
           <DropdownMenuTrigger>
             <Avatar>
-              <AvatarImage src="https://avatars.githubusercontent.com/u/1486366" />
+              <AvatarImage src={userImage??'login'} />
               <AvatarFallback>CN</AvatarFallback>
             </Avatar>
           </DropdownMenuTrigger>
@@ -72,8 +74,9 @@ const Navbar = () => {
             <DropdownMenuLabel>My Account</DropdownMenuLabel>
             <DropdownMenuSeparator />
             <DropdownMenuItem>
+              
               <User className="h-[1.2rem] w-[1.2rem] mr-2" />
-              Profile
+              <Link href="profile">Profile</Link>
             </DropdownMenuItem>
             <DropdownMenuItem>
               <Settings className="h-[1.2rem] w-[1.2rem] mr-2" />

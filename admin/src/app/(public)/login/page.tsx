@@ -56,6 +56,10 @@ function LoginPage(){
           id: data.id,
           username: data.username,
           email: data.email,
+          firstName: data.firstName,
+          lastName: data.lastName,
+          gender: data.gender,
+          image: data.image,
         },
         data.accessToken
       );
