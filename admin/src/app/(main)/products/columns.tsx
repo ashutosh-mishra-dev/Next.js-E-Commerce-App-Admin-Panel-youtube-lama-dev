@@ -13,19 +13,31 @@ import {
 
 import { ColumnDef } from "@tanstack/react-table";
 import { ArrowUpDown, MoreHorizontal } from "lucide-react";
-import Image from "next/image";
 import Link from "next/link";
+import Image from "next/image";
+
+// export type Product = {
+//   id: number;
+//   price: number;
+//   name: string;
+//   shortDescription:string;
+//   description: string;
+//   sizes: string[];
+//   colors: string[];
+//   images: Record<string,string>;
+// };
 
 export type Product = {
   id: number;
-  price: number;
-  name: string;
-  shortDescription:string;
+  title: string;
   description: string;
-  sizes: string[];
-  colors: string[];
-  images: Record<string,string>;
+  brand: string;
+  price: number;
+  stock: number;
+  rating: number;
+  thumbnail: string;
 };
+
 
 export const columns: ColumnDef<Product>[] = [
   {
@@ -46,22 +58,42 @@ export const columns: ColumnDef<Product>[] = [
       />
     ),
   },
-  {
-    accessorKey: "image",
+  // {
+  //   accessorKey: "image",
+  //   header: "Image",
+  //   cell:({row})=>{
+  //         const product = row.original;
+  //         return(
+  //           <div className="w-9 h-9 relative">
+  //             <Image src={product.images[product.colors[0]]} alt={product.name} fill className="rounded-full object-cover" />
+  //           </div>
+  //         )
+  //       }
+  // },
+
+    {
+    accessorKey: "thumbnail",
     header: "Image",
     cell:({row})=>{
           const product = row.original;
+           console.log("product is :",product.thumbnail);
           return(
             <div className="w-9 h-9 relative">
-              <Image src={product.images[product.colors[0]]} alt={product.name} fill className="rounded-full object-cover" />
+              <Image src={product.thumbnail} alt={product.title} fill className="rounded-full object-cover" />
             </div>
           )
         }
   },
   {
-    accessorKey: "name",
-    header: "Name",
+    accessorKey: "title",
+    header: "Product Name",
   },
+   
+   {
+    accessorKey: "brand",
+    header: "Brand",
+  },
+  
   {
     accessorKey: "price",
     header: ({ column }) => {
@@ -76,10 +108,24 @@ export const columns: ColumnDef<Product>[] = [
       );
     },
   },
-  {
-    accessorKey:"shortDescription",
-    header:"Description "
+   {
+    accessorKey: "rating",
+    header: "Rating",
   },
+  {
+    accessorKey: "stock",
+    header: "Stock",
+  },
+
+  {
+    accessorKey:"description",
+    header:"Description ",
+    cell:({row})=>{
+      const desc = row.getValue('description') as string;
+      return desc.slice(0,15) + "..."
+    }
+  },
+  
   {
     id: "actions",
     cell: ({ row }) => {
