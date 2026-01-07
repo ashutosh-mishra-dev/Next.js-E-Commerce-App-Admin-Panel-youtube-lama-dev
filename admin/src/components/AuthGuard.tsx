@@ -1,9 +1,8 @@
 "use client";
 
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
-import { useAuthStore } from "../../store/authStore";
-
+import { useAuthStore } from "@/store/authStore";
 
 export default function AuthGuard({
   children,
@@ -11,18 +10,37 @@ export default function AuthGuard({
   children: React.ReactNode;
 }) {
   const router = useRouter();
-  const { accessToken,hasHydrated } = useAuthStore();
-    
-  console.log("accessToken : ",accessToken);
+  const { accessToken, hasHydrated, syncWithCookie } = useAuthStore();
+  const [isReady, setIsReady] = useState(false);
 
   useEffect(() => {
-     if (!hasHydrated) return;
+    
+    if (!hasHydrated) return;
 
-    if (!accessToken) {
-      router.replace("login");
+    syncWithCookie();
+
+    const cookieToken = document.cookie
+      .split("; ")
+      .find((row) => row.startsWith("accessToken="))
+      ?.split("=")[1];
+
+
+    if (!accessToken && !cookieToken) {
+      router.replace("/login");
+      return;
     }
-  }, [accessToken, router,hasHydrated]);
 
-  
+    setIsReady(true);
+  }, [accessToken, hasHydrated, router, syncWithCookie]);
+
+ 
+  if (!hasHydrated || !isReady) {
+    return (
+      <div className="flex h-screen w-screen items-center justify-center">
+        <div className="h-12 w-12 animate-spin rounded-full border-4 border-primary border-t-transparent" />
+      </div>
+    );
+  }
+
   return <>{children}</>;
 }

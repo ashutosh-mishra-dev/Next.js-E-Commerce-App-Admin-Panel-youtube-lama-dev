@@ -7,7 +7,7 @@ import { Label } from "@/components/ui/label";
 import { Input } from "@/components/ui/input";
 import { Separator } from "@/components/ui/separator";
 import { Avatar, AvatarImage, AvatarFallback } from "@/components/ui/avatar";
-import { useAuthStore } from "../../../../store/authStore";
+import { useAuthStore } from "@/store/authStore";
 
 export default function ProfilePage() {
   const { user, accessToken, login } = useAuthStore();

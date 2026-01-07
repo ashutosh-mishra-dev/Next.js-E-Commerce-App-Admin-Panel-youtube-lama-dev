@@ -16,31 +16,35 @@ import { useTheme } from "next-themes";
 import { SidebarTrigger } from "./ui/sidebar";
 
 import { useRouter } from "next/navigation";
-import { useAuthStore } from "../../store/authStore";
+import { useAuthStore } from "../store/authStore";
 
 const Navbar = () => {
   const router = useRouter();
   const logout = useAuthStore((state) => state.logout);
-  const {user} = useAuthStore();
+  const { user } = useAuthStore();
   const userImage = user?.image;
 
   const handleLogout = () => {
-  logout();                      
-  router.replace("/login");
-};
+    // Logout function automatically cookie clear karega
+    logout();
 
-  const {  setTheme } = useTheme();
-  // const { toggleSidebar } = useSidebar();
+    // Login page par redirect karo
+    router.replace("/login");
+  };
+
+  const { setTheme } = useTheme();
+
   return (
-    <nav className="p-4 flex items-center justify-between sticky top-0 bg-background z-10">
+    <nav className="p-4 flex items-center justify-between sticky top-0 bg-background z-10 border-b">
       {/* LEFT */}
       <SidebarTrigger />
-      {/* <Button variant="outline" onClick={toggleSidebar}>
-        Custom Button
-      </Button> */}
+
       {/* RIGHT */}
       <div className="flex items-center gap-4">
-        <Link href="/">Dashboard</Link>
+        <Link href="/" className="hover:underline">
+          Dashboard
+        </Link>
+
         {/* THEME MENU */}
         <DropdownMenu>
           <DropdownMenuTrigger asChild>
@@ -62,28 +66,48 @@ const Navbar = () => {
             </DropdownMenuItem>
           </DropdownMenuContent>
         </DropdownMenu>
+
         {/* USER MENU */}
         <DropdownMenu>
-          <DropdownMenuTrigger>
-            <Avatar>
-              <AvatarImage src={userImage??'login'} />
-              <AvatarFallback>CN</AvatarFallback>
-            </Avatar>
+          <DropdownMenuTrigger asChild>
+            <Button variant="ghost" className="relative h-10 w-10 rounded-full">
+              <Avatar>
+                <AvatarImage src={userImage ?? ""} alt={user?.username ?? ""} />
+                <AvatarFallback className="bg-primary/10">
+                  {user?.firstName?.charAt(0).toUpperCase() ?? "U"}
+                  {user?.lastName?.charAt(0).toUpperCase() ?? ""}
+                </AvatarFallback>
+              </Avatar>
+            </Button>
           </DropdownMenuTrigger>
-          <DropdownMenuContent sideOffset={10}>
-            <DropdownMenuLabel>My Account</DropdownMenuLabel>
+          <DropdownMenuContent align="end" sideOffset={10} className="w-56">
+            <DropdownMenuLabel>
+              <div className="flex flex-col space-y-1">
+                <p className="text-sm font-medium leading-none">
+                  {user?.firstName} {user?.lastName}
+                </p>
+                <p className="text-xs leading-none text-muted-foreground">
+                  {user?.email}
+                </p>
+              </div>
+            </DropdownMenuLabel>
             <DropdownMenuSeparator />
-            <DropdownMenuItem>
-              
-              <User className="h-[1.2rem] w-[1.2rem] mr-2" />
-              <Link href="profile">Profile</Link>
+            <DropdownMenuItem asChild>
+              <Link href="/profile" className="cursor-pointer">
+                <User className="h-4 w-4 mr-2" />
+                Profile
+              </Link>
             </DropdownMenuItem>
             <DropdownMenuItem>
-              <Settings className="h-[1.2rem] w-[1.2rem] mr-2" />
+              <Settings className="h-4 w-4 mr-2" />
               Settings
             </DropdownMenuItem>
-            <DropdownMenuItem variant="destructive" onClick={handleLogout}>
-              <LogOut className="h-[1.2rem] w-[1.2rem] mr-2" />
+            <DropdownMenuSeparator />
+            <DropdownMenuItem
+              className="text-destructive focus:text-destructive cursor-pointer"
+              onClick={handleLogout}
+            >
+              <LogOut className="h-4 w-4 mr-2" />
               Logout
             </DropdownMenuItem>
           </DropdownMenuContent>
