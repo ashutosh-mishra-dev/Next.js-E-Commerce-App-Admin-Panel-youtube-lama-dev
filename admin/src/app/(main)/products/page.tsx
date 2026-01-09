@@ -133,7 +133,7 @@ return json.products.map((item:Product) => ({
 
 
 };
-const PaymentsPage = async () => {
+const ProductsPage = async () => {
   const data = await getData();
 
   console.log("data is :",data);
@@ -148,4 +148,4 @@ const PaymentsPage = async () => {
   );
 };
 
-export default PaymentsPage;
+export default ProductsPage;

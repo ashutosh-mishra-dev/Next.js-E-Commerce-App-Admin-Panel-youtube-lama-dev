@@ -15,6 +15,7 @@ import { ColumnDef } from "@tanstack/react-table";
 import { ArrowUpDown, MoreHorizontal } from "lucide-react";
 import Link from "next/link";
 import Image from "next/image";
+import { useState } from "react";
 
 // export type Product = {
 //   id: number;
@@ -121,8 +122,16 @@ export const columns: ColumnDef<Product>[] = [
     accessorKey:"description",
     header:"Description ",
     cell:({row})=>{
+      const [expanded,setExpanded] = useState(false);
+
       const desc = row.getValue('description') as string;
-      return desc.slice(0,15) + "..."
+
+      return <div className={`max-w-[280px] ${expanded?"max-h-[150px] overflow-y-auto":"overflow-hidden"}`} >
+        <span className="text-sm wrap-break-words">
+          {expanded?desc:desc.slice(0,20) + '...'}
+        </span>
+        {desc.length > 18 && <button className="text-xs font-medium hover:underline text-blue-400 cursor-pointer" onClick={()=>setExpanded(!expanded)}>{expanded?"less":"more"}</button>}
+      </div>
     }
   },
   

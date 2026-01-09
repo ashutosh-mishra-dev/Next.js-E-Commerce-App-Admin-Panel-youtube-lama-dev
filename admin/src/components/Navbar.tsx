@@ -16,7 +16,7 @@ import { useTheme } from "next-themes";
 import { SidebarTrigger } from "./ui/sidebar";
 
 import { useRouter } from "next/navigation";
-import { useAuthStore } from "../store/authStore";
+import { useAuthStore } from "@/store/authStore";
 
 const Navbar = () => {
   const router = useRouter();
