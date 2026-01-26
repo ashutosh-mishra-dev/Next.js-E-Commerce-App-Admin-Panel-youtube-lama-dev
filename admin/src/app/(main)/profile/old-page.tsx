@@ -1,38 +1,49 @@
 "use client";
+
+import { useEffect } from "react";
+
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Label } from "@/components/ui/label";
 import { Input } from "@/components/ui/input";
 import { Separator } from "@/components/ui/separator";
 import { Avatar, AvatarImage, AvatarFallback } from "@/components/ui/avatar";
-import { useProfile } from "@/hooks/useProfile";
+import { useAuthStore } from "@/store/authStore";
 
 export default function ProfilePage() {
-  const { data: user, isLoading } = useProfile();
-  //console.log(user);
-  
+  const { user, accessToken, login } = useAuthStore();
 
-  if (isLoading) {
-    return (
-      <div className="max-w-xl mx-auto mt-10 flex justify-center">
-        <div className="h-12 w-12 animate-spin rounded-full border-4 border-primary border-t-transparent" />
-      </div>
-    );
-  }
+  useEffect(() => {
+    if (!user && accessToken) {
+      fetch("https://dummyjson.com/auth/me", {
+        headers: {
+          Authorization: `Bearer ${accessToken}`,
+        },
+      })
+        .then((res) => res.json())
+        .then((data) => {
+          login(
+            {
+              id: data.id,
+              username: data.username,
+              email: data.email,
+              firstName: data.firstName,
+              lastName: data.lastName,
+              image: data.image,
+            },
+            accessToken
+          );
+        });
+    }
+  }, [user, accessToken, login]);
 
-  if (!user) {
-    return (
-      <div className="max-w-xl mx-auto mt-10">
-        <p className="text-center text-muted-foreground">No profile data found</p>
-      </div>
-    );
-  }
+  if (!user) return <p className="p-6">Loading profile...</p>;
 
   return (
     <div className="max-w-xl mx-auto mt-10">
       <Card>
         <CardHeader className="flex flex-row items-center gap-4">
           <Avatar className="h-16 w-16">
-            <AvatarImage src={user.image} alt={user.username} />
+            <AvatarImage src={user.image} />
             <AvatarFallback>
               {user.firstName?.[0]}
               {user.lastName?.[0]}

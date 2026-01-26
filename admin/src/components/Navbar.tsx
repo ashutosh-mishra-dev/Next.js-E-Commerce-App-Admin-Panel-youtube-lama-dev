@@ -15,28 +15,25 @@ import { Button } from "./ui/button";
 import { useTheme } from "next-themes";
 import { SidebarTrigger } from "./ui/sidebar";
 
-import { useRouter } from "next/navigation";
 import { useAuthStore } from "@/store/authStore";
+import { useLogout } from "@/hooks/useAuth";
+//import a from "@/public/au2.png"
 
 const Navbar = () => {
-  const router = useRouter();
-  const logout = useAuthStore((state) => state.logout);
   const { user } = useAuthStore();
+  const logout = useLogout();
+  const { setTheme } = useTheme();
+
   const userImage = user?.image;
 
   const handleLogout = () => {
-    // Logout function automatically cookie clear karega
     logout();
-
-    // Login page par redirect karo
-    router.replace("/login");
   };
-
-  const { setTheme } = useTheme();
 
   return (
     <nav className="p-4 flex items-center justify-between sticky top-0 bg-background z-10 border-b">
       {/* LEFT */}
+
       <SidebarTrigger />
 
       {/* RIGHT */}
@@ -72,7 +69,7 @@ const Navbar = () => {
           <DropdownMenuTrigger asChild>
             <Button variant="ghost" className="relative h-10 w-10 rounded-full">
               <Avatar>
-                <AvatarImage src={userImage ?? ""} alt={user?.username ?? ""} />
+                <AvatarImage src={userImage ?? undefined} alt={user?.username ?? ""} />
                 <AvatarFallback className="bg-primary/10">
                   {user?.firstName?.charAt(0).toUpperCase() ?? "U"}
                   {user?.lastName?.charAt(0).toUpperCase() ?? ""}

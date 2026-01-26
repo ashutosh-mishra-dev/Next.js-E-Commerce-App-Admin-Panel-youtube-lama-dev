@@ -17,17 +17,6 @@ import Link from "next/link";
 import Image from "next/image";
 import { useState } from "react";
 
-// export type Product = {
-//   id: number;
-//   price: number;
-//   name: string;
-//   shortDescription:string;
-//   description: string;
-//   sizes: string[];
-//   colors: string[];
-//   images: Record<string,string>;
-// };
-
 export type Product = {
   id: number;
   title: string;
@@ -59,19 +48,6 @@ export const columns: ColumnDef<Product>[] = [
       />
     ),
   },
-  // {
-  //   accessorKey: "image",
-  //   header: "Image",
-  //   cell:({row})=>{
-  //         const product = row.original;
-  //         return(
-  //           <div className="w-9 h-9 relative">
-  //             <Image src={product.images[product.colors[0]]} alt={product.name} fill className="rounded-full object-cover" />
-  //           </div>
-  //         )
-  //       }
-  // },
-
     {
     accessorKey: "thumbnail",
     header: "Image",

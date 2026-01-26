@@ -11,98 +11,21 @@ import {
 } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
+import { useLogin } from "@/hooks/useAuth";
 
 import Image from "next/image";
-import { useAuthStore } from "@/store/authStore";
-import { useRouter } from "next/navigation";
-import { useEffect, useState } from "react";
+import {  useState } from "react";
 
 function LoginPage() {
-  const router = useRouter();
-  const { login, hasHydrated, accessToken, syncWithCookie } = useAuthStore();
-
-  const [email, setEmail] = useState("");
+  const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
-  const [loading, setLoading] = useState(false);
-  const [isReady, setIsReady] = useState(false);
 
-  // Check if user is already logged in
-  useEffect(() => {
-    // Step 1: Pehle hydration wait karo
-    if (!hasHydrated) return;
+  const {mutate: login, isPending, isError, error } = useLogin();
 
-    // Step 2: Cookie sync karo
-    syncWithCookie();
-
-    // Step 3: Check karo ki user already logged in hai ki nahi
-    const cookieToken = document.cookie
-      .split("; ")
-      .find((row) => row.startsWith("accessToken="))
-      ?.split("=")[1];
-
-    if (accessToken || cookieToken) {
-      // Already logged in, redirect to home
-      router.replace("/");
-      return;
-    }
-
-    // Step 4: Not logged in, ready to show login form
-    setIsReady(true);
-  }, [accessToken, hasHydrated, router, syncWithCookie]);
-
-  const handleLogin = async (e: React.FormEvent) => {
+  const handleSubmit = (e:React.FormEvent)=>{
     e.preventDefault();
-
-    try {
-      setLoading(true);
-
-      const res = await fetch("https://dummyjson.com/auth/login", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({
-          username: email,
-          password: password,
-        }),
-      });
-
-      if (!res.ok) {
-        throw new Error("Login failed");
-      }
-
-      const data = await res.json();
-
-      // Login function khud cookie set karega
-      login(
-        {
-          id: data.id,
-          username: data.username,
-          email: data.email,
-          firstName: data.firstName,
-          lastName: data.lastName,
-          gender: data.gender,
-          image: data.image,
-        },
-        data.accessToken
-      );
-
-      router.replace("/");
-    
-    } catch (error) {
-      console.error("Login error:", error);
-      alert("Invalid credentials. Please try again.");
-    } finally {
-      setLoading(false);
-    }
+    login({username,password});
   };
-
-  // Show loading spinner while checking authentication
-  if (!hasHydrated || !isReady) {
-    return (
-      <div className="flex h-screen items-center justify-center">
-        <div className="h-12 w-12 animate-spin rounded-full border-4 border-primary border-t-transparent" />
-      </div>
-    );
-  }
 
   return (
     <div className="w-screen min-h-dvh flex flex-col items-center justify-center space-y-5 bg-amber-200/300">
@@ -115,18 +38,23 @@ function LoginPage() {
           </CardDescription>
         </CardHeader>
         <CardContent>
-          <form onSubmit={handleLogin}>
-            <div className="flex flex-col gap-6">
+          <form onSubmit={handleSubmit}>
+            <div className="flex flex-col gap-2.5">
+              {isError && (
+                <div className="p-3 text-sm text-red-500 ...">
+                  {error?.message || 'Invalid credentials. Please try again.'}
+                </div>
+              )}
               <div className="grid gap-2">
-                <Label htmlFor="email">Username</Label>
+                <Label htmlFor="text">Username</Label>
                 <Input
-                  id="email"
+                  id="username"
                   type="text"
                   placeholder="emilys"
-                  value={email}
-                  onChange={(e) => setEmail(e.target.value)}
+                  value={username}
+                  onChange={(e) => setUsername(e.target.value)}
                   required
-                  disabled={loading}
+                  disabled={isPending}
                   autoComplete="username"
                 />
               </div>
@@ -139,12 +67,12 @@ function LoginPage() {
                   value={password}
                   onChange={(e) => setPassword(e.target.value)}
                   required
-                  disabled={loading}
+                  disabled={isPending}
                   autoComplete="current-password"
                 />
               </div>
-              <Button type="submit" className="w-full" disabled={loading}>
-                {loading ? (
+              <Button type="submit" className="w-full" disabled={isPending}>
+                {isPending ? (
                   <div className="flex items-center gap-2">
                     <div className="h-4 w-4 animate-spin rounded-full border-2 border-current border-t-transparent" />
                     Logging in...
